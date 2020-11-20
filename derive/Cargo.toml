@@ -1,8 +1,12 @@
 [package]
 authors = ["Mathieu Tricoire <mathieu@tricoi.re>"]
+description = "Derive macros for identifier."
+documentation = "https://docs.rs/identifier/"
 edition = "2018"
+homepage = "https://github.com/MathieuTricoire/identifier"
 license = "MIT OR Apache-2.0"
 name = "identifier_derive"
+repository = "https://github.com/MathieuTricoire/identifier"
 version = "0.1.0"
 
 [lib]
