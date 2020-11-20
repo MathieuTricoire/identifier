@@ -1,0 +1,5 @@
+error: The `with` attribute is required.
+ --> $DIR/missing-attr-with.rs:4:13
+  |
+4 | #[identifier(params = "1")]
+  |             ^^^^^^^^^^^^^^

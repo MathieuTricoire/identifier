@@ -1,0 +1,8 @@
+error: Only TupleStruct with a single `u128` unnamed field is supported, i.e. `struct Id(u128);`
+  --> $DIR/invalid-struct-fields.rs:15:11
+   |
+15 |   struct Id {
+   |  ___________^
+16 | |     id: u128,
+17 | | }
+   | |_^

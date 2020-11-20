@@ -1,0 +1,5 @@
+error: Only TupleStruct with a single `u128` unnamed field is supported, i.e. `struct Id(u128);`
+  --> $DIR/invalid-item.rs:15:1
+   |
+15 | enum Id {}
+   | ^^^^

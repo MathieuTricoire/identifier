@@ -1,0 +1,14 @@
+[package]
+authors = ["Mathieu Tricoire <mathieu@tricoi.re>"]
+edition = "2018"
+license = "MIT OR Apache-2.0"
+name = "identifier_derive"
+version = "0.1.0"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = "1.0"
+quote = "1.0"
+proc-macro2 = "1.0"
