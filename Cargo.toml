@@ -10,13 +10,13 @@ license = "MIT OR Apache-2.0"
 name = "identifier"
 readme = "README.md"
 repository = "https://github.com/MathieuTricoire/identifier"
-version = "0.1.0"
+version = "0.1.1"
 
 [workspace]
 members = ["derive"]
 
 [dependencies]
-identifier_derive = { version = "0.1.0", path = "derive" }
+identifier_derive = { version = "0.1.1", path = "derive" }
 thiserror = "1.0"
 
 [dev-dependencies]
