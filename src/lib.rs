@@ -56,6 +56,10 @@
 //! }
 //! ```
 
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/MathieuTricoire/identifier/main/logo.svg"
+)]
+
 mod error;
 mod identifier;
 
