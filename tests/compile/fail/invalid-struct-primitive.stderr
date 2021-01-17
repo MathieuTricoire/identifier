@@ -1,5 +1,5 @@
-error: Only `u128` primitive type is supported.
+error: Only `u32`, `u64` or `u128` primitive type is supported.
   --> $DIR/invalid-struct-primitive.rs:15:11
    |
-15 | struct Id(u64);
+15 | struct Id(u16);
    |           ^^^

@@ -12,6 +12,6 @@ mod mod_id {
 
 #[derive(Identifier, Eq, PartialEq)]
 #[identifier(with = "mod_id")]
-struct Id(u64);
+struct Id(u16);
 
 fn main() {}

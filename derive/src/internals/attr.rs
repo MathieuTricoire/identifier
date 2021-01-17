@@ -54,6 +54,7 @@ impl<'c, T> Attr<'c, T> {
 
 pub struct Attrs {
     with: Option<syn::ExprPath>,
+    field_type: Option<syn::Ident>,
     params: Option<Punctuated<syn::Expr, Comma>>,
 }
 
@@ -62,9 +63,12 @@ const ERR_EXPECT_IDENTIFIER: &str = "expected #[identifier(with = \"mod\", ...)"
 impl Attrs {
     pub fn get(cx: &Ctxt, input: &syn::DeriveInput) -> Attrs {
         let mut params = Attr::none(cx, PARAMS);
+        let mut field_type = Attr::none(cx, FIELD_TYPE);
         let mut with = Attr::none(cx, WITH);
 
-        check_data(&cx, input);
+        if let Ok(ident) = get_ident_field_type(&cx, input) {
+            field_type.set(ident, ident.clone());
+        }
 
         let identifier_result = input
             .attrs
@@ -119,6 +123,7 @@ impl Attrs {
         }
 
         Attrs {
+            field_type: field_type.get(),
             with: with.get(),
             params: params.get(),
         }
@@ -131,24 +136,33 @@ impl Attrs {
     pub fn params(&self) -> Option<&Punctuated<syn::Expr, Comma>> {
         self.params.as_ref()
     }
+
+    pub fn field_type(&self) -> Option<&syn::Ident> {
+        self.field_type.as_ref()
+    }
 }
 
-fn check_data(cx: &Ctxt, input: &DeriveInput) {
+fn get_ident_field_type<'a>(cx: &'a Ctxt, input: &'a DeriveInput) -> Result<&'a syn::Ident, ()> {
     const ERROR: &str =
-        "Only TupleStruct with a single `u128` unnamed field is supported, i.e. `struct Id(u128);`";
+        "Only TupleStruct with a single `u32`, `u64` or `u128` is supported, i.e. `struct Id(u128);`";
     match &input.data {
         Data::Struct(data_struct) => {
             if let Fields::Unnamed(fields) = &data_struct.fields {
                 if fields.unnamed.len() == 1 {
                     let field = fields.unnamed.first().unwrap();
                     if let syn::Type::Path(ty_path) = &field.ty {
-                        if !ty_path.path.is_ident("u128") {
-                            cx.error_spanned_by(
-                                &ty_path.path,
-                                "Only `u128` primitive type is supported.",
-                            );
+                        match ty_path.path.get_ident() {
+                            Some(ident) if ident == "u128" || ident == "u64" || ident == "u32" => {
+                                return Ok(ident);
+                            }
+                            _ => {
+                                cx.error_spanned_by(
+                                    &ty_path.path,
+                                    "Only `u32`, `u64` or `u128` primitive type is supported.",
+                                );
+                                return Err(());
+                            }
                         }
-                        return ();
                     }
                 }
             }
@@ -161,6 +175,7 @@ fn check_data(cx: &Ctxt, input: &DeriveInput) {
             cx.error_spanned_by(&data_union.union_token, ERROR);
         }
     };
+    return Err(());
 }
 
 pub fn get_meta_items(cx: &Ctxt, attr: &syn::Attribute) -> Vec<syn::NestedMeta> {

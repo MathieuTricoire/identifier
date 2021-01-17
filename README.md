@@ -1,4 +1,4 @@
-<img src="logo.svg" width="48">
+<img src="logo.svg" width="48" style="margin-top: 10px">
 
 # Identifier
 
@@ -63,7 +63,7 @@ _No params (with the [uuid crate](https://crates.io/crates/uuid))_
 
 ```rust
 mod uuid {
-    use uuid::Uuid;
+    use uuid::{Uuid, Version};
 
     pub fn generate() -> u128 {
         Uuid::new_v4().as_u128()

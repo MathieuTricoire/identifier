@@ -4,6 +4,7 @@ use syn::{Ident, Path};
 #[derive(Copy, Clone)]
 pub struct Symbol(&'static str);
 
+pub const FIELD_TYPE: Symbol = Symbol("field_type");
 pub const IDENTIFIER: Symbol = Symbol("identifier");
 pub const PARAMS: Symbol = Symbol("params");
 pub const WITH: Symbol = Symbol("with");
