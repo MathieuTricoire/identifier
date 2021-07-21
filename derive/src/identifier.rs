@@ -83,6 +83,21 @@ pub fn expand_derive_display(input: &DeriveInput) -> Result<TokenStream, Vec<syn
     Ok(expanded)
 }
 
+pub fn expand_derive_debug(input: &DeriveInput) -> Result<TokenStream, Vec<syn::Error>> {
+    let ident = &input.ident;
+    let format = format!("{}({{}})", ident);
+
+    let expanded = quote! {
+        impl std::fmt::Debug for #ident {
+            fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                write!(f, #format, self.format())
+            }
+        }
+    };
+
+    Ok(expanded)
+}
+
 pub fn expand_derive_from_str(input: &DeriveInput) -> Result<TokenStream, Vec<syn::Error>> {
     let ident = &input.ident;
     let trait_path: syn::Path = parse_quote!(core::str::FromStr);
