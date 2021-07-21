@@ -66,6 +66,7 @@ mod identifier;
 // #[doc(inline)]
 pub use crate::error::ParseError;
 pub use crate::identifier::Identifier;
+pub trait DebugId {}
 
 // Derive
 #[allow(unused_imports)]

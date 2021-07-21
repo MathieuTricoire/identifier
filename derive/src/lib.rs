@@ -23,6 +23,14 @@ pub fn derive_display(input: TokenStream) -> TokenStream {
         .into()
 }
 
+#[proc_macro_derive(DebugId)]
+pub fn derive_debug(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as DeriveInput);
+    identifier::expand_derive_debug(&input)
+        .unwrap_or_else(to_compile_errors)
+        .into()
+}
+
 #[proc_macro_derive(FromStr)]
 pub fn derive_from_str(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
